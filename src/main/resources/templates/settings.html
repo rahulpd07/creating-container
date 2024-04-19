@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet" />
+
+	<link rel="stylesheet" href="fonts/icomoon/style.css" />
+
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+
+	<!-- Style -->
+	<link rel="stylesheet" href="css/style.css" />
+
+	<title>NMA - Dashboard</title>
+</head>
+
+<body>
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<img src="images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid" />
+				</div>
+				<div class="col-md-6 contents">
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="mb-4">
+								<h3>Dashboard</h3>
+								<p class="mb-4">Find all details about the device here.</p>
+							</div>
+							<form action="#" th:action="@{/settings}" th:object="${internalData}" method="post">
+    <div class="form-group last mb-4"><label for="sdnIp"> SDN IP or Domain:</label> <input type="text" class="form-control" id="sdnIp" th:field="*{sdnIp}" name="sdnIp" /></div>
+    <div class="form-group last mb-4"><label for="sdnPort">SDN PORT:</label> <input type="text" class="form-control" id="sdnPort" th:field="*{sdnPort}" name="sdnPort" /></div>
+    <div class="form-group last mb-4"><label for="five5GcoreIp">5G Core IP:</label> <input type="text" class="form-control" id="five5GcoreIp" th:field="*{five5GcoreIp}" name="five5GcoreIp" /></div>
+    <div class="form-group last mb-4"><label for="fiveGCorePort">5G Core Port:</label> <input type="text" class="form-control" id="fiveGCorePort" th:field="*{fiveGCorePort}" name="fiveGCorePort" /></div>
+    <div class="form-group last mb-4"><label for="dockerIp">Docker IP:</label> <input type="text" class="form-control" id="dockerIp" th:field="*{dockerIp}" name="dockerIp" /></div>
+    <div class="form-group last mb-4"><label for="dockerPort">Docker PORT:</label> <input type="text" class="form-control" id="dockerPort" th:field="*{dockerPort}" name="dockerPort" /></div>
+    <div class="form-group last mb-4"><label for="tenantId">Tenant Id:</label> <input type="text" class="form-control" id="tenantId" th:field="*{tenantId}" name="tenantId" /></div>
+   <div class="form-group last mb-4"><label for="globalControllerIp">Global Controller IP:</label> <input type="text" class="form-control" id="globalControllerIp" th:field="*{globalControllerIp}" name="globalControllerIp" /></div>
+  <div class="form-group last mb-4"><label for="globalControllerPort">Global Controller Port:</label> <input type="text" class="form-control" id="globalControllerPort" th:field="*{globalControllerPort}" name="globalControllerPort" /></div>
+
+   
+        <button class="btn btn-block btn-primary" type="submit" name="submit-btn">Save</button>
+    </div>
+</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

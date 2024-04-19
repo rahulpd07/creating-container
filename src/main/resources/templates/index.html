@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet" />
+
+	<link rel="stylesheet" href="fonts/icomoon/style.css" />
+
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+
+	<!-- Style -->
+	<link rel="stylesheet" href="css/style.css" />
+
+	<title>Niral Controller Client</title>
+</head>
+
+<body>
+	<div class="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<img src="images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid" />
+				</div>
+				<div class="col-md-6 contents">
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							<div class="mb-4">
+								<h3>Dashboard</h3>
+								<p class="mb-4">Find all details about the device here.</p>
+							</div>
+							<div class="form-group last mb-4"><small id="deploymentId"
+									class="form-text text-muted">Device ID</small> <a
+									th:text="${internalData.deploymentId}"></a></div>
+							<div class="form-group last mb-4" th:if="${internalData.sdnIp != null}"><small
+									id="sdnIp" class="form-text text-muted"> SDN IP</small> <a
+									th:text="${internalData.sdnIp}"></a></div>
+							<div class="form-group last mb-4" th:if="${internalData.sdnPort != null}"><small id="sdnPort"
+									class="form-text text-muted">SDN PORT</small> <a th:text="${internalData.sdnPort}"></a>
+							</div>
+                              
+                               <div class="form-group last mb-4" th:if="${internalData.five5GcoreIp != null}"><small id="five5GcoreIp"
+									class="form-text text-muted">FiveGcoreIp</small> <a th:text="${internalData.five5GcoreIp}"></a>
+							</div>
+							<div class="form-group last mb-4" th:if="${internalData.fiveGCorePort != null}"><small id="fiveGCorePort"
+									class="form-text text-muted">FiveGCorePort</small> <a th:text="${internalData.fiveGCorePort}"></a>
+							</div>
+                            <div class="form-group last mb-4" th:if="${internalData.dockerIp != null}"><small id="dockerIp"
+									class="form-text text-muted">DockerIp</small> <a th:text="${internalData.dockerIp}"></a>
+							</div>
+							
+							<div class="form-group last mb-4" th:if="${internalData.dockerPort != null}"><small id="dockerPort"
+									class="form-text text-muted">DockerPort</small> <a th:text="${internalData.dockerPort}"></a>
+							</div>
+							<div class="form-group last mb-4" th:if="${internalData.tenantId != null}"><small id="tenantId"
+									class="form-text text-muted">TenantId</small> <a th:text="${internalData.tenantId}"></a>
+							</div>
+							<div class="form-group last mb-4" th:if="${internalData.globalControllerIp != null}"><small id="globalControllerIp"
+									class="form-text text-muted">GlobalControllerIp</small> <a th:text="${internalData.globalControllerIp}"></a>
+							</div>
+							<div class="form-group last mb-4" th:if="${internalData.globalControllerPort != null}"><small id="globalControllerPort"
+									class="form-text text-muted">GlobalControllerPort</small> <a th:text="${internalData.globalControllerPort}"></a>
+							</div>
+							<div class="mt-4">
+								<a href="/settings"> <input value="Settings" class="btn btn-block btn-primary" /> </a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>
