@@ -7,8 +7,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -20,7 +22,7 @@ import com.example.creatingcontainer.Repository.PorductUpdateInfoRepository;
 import com.example.creatingcontainer.Service.InternalDataService;
 import com.example.creatingcontainer.Service.ServiceImpl;
 import com.example.creatingcontainer.Service.TenentClientInterface;
-
+@Component
 @EnableScheduling
 @Service
 public class TenentClientInterfaceImpl implements TenentClientInterface {
@@ -30,7 +32,9 @@ public class TenentClientInterfaceImpl implements TenentClientInterface {
 	PorductUpdateInfoRepository porductUpdateInfoRepository;
 	@Autowired
 	InternalDataService internalDataService;
- 	
+	@Autowired
+	AsyncConfiguration asyncConfiguration;
+
 	@Autowired	
 	ServiceImpl serviceImpl;
     private static final Logger logger = LoggerFactory.getLogger(TenentClientInterfaceImpl.class);
@@ -56,13 +60,25 @@ public class TenentClientInterfaceImpl implements TenentClientInterface {
         return productMap;
     }
 
+
+	@Async("asyncTaskExecutor")
+	@Scheduled(initialDelay = 5000,fixedRate = 10000)
+	@Override
+	public  void  testing() {
+		System.out.println("******************************************************************************************");
+
+	}
+	@Async("asyncTaskExecutor")
 	@Scheduled(initialDelay = 5000,fixedRate = 10000)
  	@Override
     public  void  getClientDatas() {
+//		System.out.println("222222 APIIIIIIIIIIIIII --------------------------------------------------------------------------------");
+
 		String globalControllerIp = internalDataService.getGlobalControllerIp();
 		String globalControllerPort = internalDataService.getGlobalControllerPort();
  		porductUpdateInfoRepository.updateProductInfoTenentUpdate(internalDataService.getTenantId(),internalDataService.getDeploymentId());
 		TenentClient model = new TenentClient();
+
 		model.setDeploymentId(internalDataService.getDeploymentId());
 		model.setTenantId(internalDataService.getTenantId());
 		ArrayList<String>versinAvailableInDb = new ArrayList<>();
@@ -81,7 +97,7 @@ public class TenentClientInterfaceImpl implements TenentClientInterface {
 	            .retrieve()
 	            .bodyToMono(ProductRootDto.class)
 	            .block();
-	    
+	    System.out.println("222222 APIIIIIIIIIIIIII 222333344444445567778909876543456789876544567876545678765");
 if (productRootDto != null) {
 // boolean updatesProvisionStatus = productRootDto.isProvisionStatus();
 	String task = "InQueue";
@@ -125,36 +141,3 @@ if (productRootDto != null) {
  	}
 
 
-//model1.setDeploymentId(tanentClientRoot.getDeploymentId());
-//model1.setTenantId(tanentClientRoot.getTenantId());
-//List<AllProductDetails>l = new ArrayList<>();
-	          
-//ArrayList<AllProductDetails> p =tanentClientRoot.getProductDetails();	
-//
-//if(tenantClientRepository.countProducts() <=2)
-//{
-//	
-//for(AllProductDetails allProductDetails : p)
-//{
-//	  AllProductDetails m = new AllProductDetails();
-//	  m.setProductName(allProductDetails.getProductName());
-//	  m.setProductVersion(allProductDetails.getProductVersion());
-//	  m.setProduct_scheduled_update(false);
-//	  m.setProduct_scheduled_update_dateTime(allProductDetails.getProduct_scheduled_update_dateTime());
-//	  m.setTask(allProductDetails.getTask());
-//	  
-//	  tenantClientRepository.save(m);
-//}
-//
-//}
-//
-//else
-//{
-//	 
-//}
-
-//porductUpdateInfoRepository.updateProductInfo(porductUpdateInfo.getId(),  porductUpdateInfo.getDeploymentId(), porductUpdateInfo.getTenantId(), porductUpdateInfo.getProductName(), porductUpdateInfo.getProductVersion(), porductUpdateInfo.getProduct_scheduled_update(), porductUpdateInfo.getProduct_scheduled_update_dateTime(), porductUpdateInfo.getTask());
-//
-//model1.setProductDetails(p);
-//return model1;
- 

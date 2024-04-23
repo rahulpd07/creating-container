@@ -7,7 +7,7 @@ import com.example.creatingcontainer.Dto.TanentClientRootDto;
 
 public interface VersionAndSdnUpdaterInterface {
 
-	public TanentClientRootDto pullAndUpdateSdnController();
-	public TanentClientRootDto pullAndUpdate5GCore();
+	public void pullAndUpdateSdnController();
+	public void pullAndUpdate5GCore();
 
  }

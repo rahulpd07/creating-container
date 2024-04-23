@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.creatingcontainer.Service.TenentClientInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 	
 	@Autowired
 	InternalDataService internalDataService;
+
+	@Autowired
+	TenentClientInterface tenentClientInterface;
 	
     private static final Logger logger = LoggerFactory.getLogger(ServiceofNetworkfunctionComposeimpl.class);
 
@@ -156,7 +160,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -250,7 +254,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 				}
 			}
@@ -332,7 +336,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 				}
 			}
@@ -513,7 +517,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 				}
 			}
@@ -595,7 +599,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -764,7 +768,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -956,7 +960,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -1075,7 +1079,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 				}
 			}
@@ -1102,8 +1106,9 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 				.accept(MediaType.APPLICATION_JSON).retrieve()
 				.bodyToMono(new ParameterizedTypeReference<List<HashMap<String, Object>>>() {
 				}).block();
-	
+
 		if (startResponseBody != null) {
+			tenentClientInterface.getClientDatas();
 			for (HashMap<String, Object> containerInfo : startResponseBody) {
 				// Access data in the HashMap as needed
 				logger.info("ContainerId : " + containerInfo.get("Id") + "Image: " +containerInfo.get("Image") + "Names : " + containerInfo.get("Names"));
@@ -1120,7 +1125,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 							.toBodilessEntity().block();
 
 					logger.info("Container stopped successfully: " + containerInfo.get("Id"));
-
+					tenentClientInterface.getClientDatas();
 					this.Webclient().delete().uri("/v1.44/containers/" + containerInfo.get("Id")).retrieve().toBodilessEntity()
 							.block();
 
@@ -1129,7 +1134,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 
 			}
 		}}
-
+		tenentClientInterface.getClientDatas();
 	}
 
 
@@ -1208,6 +1213,15 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 		String version=porductUpdateInfo.getProductVersion();	
 		String imageRepo="niralnetworks/niralos-5g-core";
 		String imageName = imageRepo+":"+version;
+
+		try{
+			tenentClientInterface.getClientDatas();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
 		return imageName;
 	}
 

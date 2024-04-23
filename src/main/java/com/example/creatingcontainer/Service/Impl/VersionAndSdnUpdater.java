@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -20,7 +22,7 @@ import com.example.creatingcontainer.Service.ServiceInterface;
 import com.example.creatingcontainer.Service.VersionAndSdnUpdaterInterface;
 import com.example.creatingcontainer.Service.Impl.fiveGcoreImpl.ServiceofNetworkfunctionComposeimpl;
 
-
+@Component
 @EnableScheduling
 @Service
 public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
@@ -36,7 +38,8 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 
 	private static final Logger logger = LoggerFactory.getLogger(VersionAndSdnUpdater.class);
 
-
+//	@Autowired
+//	AsyncConfiguration asyncConfiguration;
 	@Autowired
 	ServiceofNetworkfunctionComposeimpl serviceofNetworkfunctionComposeimpl;
 
@@ -61,10 +64,10 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 	public void updateTheUpdateAvailable(boolean availableUpdate, String productName) {
 		porductUpdateInfoRepository.updateTheAvailableUpdateInTable(availableUpdate, productName);
 	}
-
+//	@Async("asyncTaskExecutor")
 	@Scheduled(initialDelay = 3000, fixedRate = 1000)
 	@Override
-	public TanentClientRootDto pullAndUpdateSdnController() {
+	public void pullAndUpdateSdnController() {
 		String globalControllerIp = internalDataService.getGlobalControllerIp();
 		String globalControllerPortNumber = internalDataService.getGlobalControllerPort();
 
@@ -185,7 +188,7 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 			updateTheUpdateAvailable(availableUpdate, productName);
 			boolean dateTimeUpdate = true;
 			updateDateTimeScheduled(porductUpdateInfo1, dateTimeUpdate);
-			return tanentClientRootDto;
+//			return tanentClientRootDto;
 		} else
 		{
 			if (inputDateTime != null)
@@ -231,7 +234,7 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 		}
 
 
-			return tanentClientRootDto;
+//			return tanentClientRootDto;
 
 	}
 
@@ -245,10 +248,10 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 		return networking;
 	}
 
-
+//	@Async("asyncTaskExecutor")
 	@Scheduled(initialDelay = 3000, fixedRate = 1000)
 	@Override
-	public TanentClientRootDto pullAndUpdate5GCore() {
+	public void pullAndUpdate5GCore() {
 
 		String globalControllerIp = internalDataService.getGlobalControllerIp();
 		String globalControllerPortNumber = internalDataService.getGlobalControllerPort();
@@ -330,7 +333,7 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 			String productName = "niralos-5g-core";
 			boolean availableUpdate = false;
 			updateTheUpdateAvailable(availableUpdate, productName);
-			return tanentClientRootDto;
+//			return tanentClientRootDto;
 		} else if (checkUpdate == false) {
 			String task = "InProgress";
 			PorductUpdateInfo porductUpdateInfo2 = getProductVersionFromDb("niralos-5g-core");
@@ -389,7 +392,7 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 			String productName = "niralos-5g-core";
 			boolean availableUpdate = false;
 			updateTheUpdateAvailable(availableUpdate, productName);
-			return tanentClientRootDto;
+//			return tanentClientRootDto;
 		} else {
 			if (inputDateTime != null) {
 				if ((currentDateTime.isBefore(inputDateTime)) && (currentDateTime != null)) {
@@ -422,7 +425,7 @@ public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {
 				}
 			}
 
-			return tanentClientRootDto;
+//			return tanentClientRootDto;
 		}
 	}
 }
