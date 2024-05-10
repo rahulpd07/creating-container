@@ -33,31 +33,6 @@ public class PorductUpdateInfoImpl implements PorductUpdateInfoInterface {
 
 	@Override
 	public void savePorductUpdateInfo() {
-// 
-//		if(porductUpdateInfoRepository.countProductsUpdateInfo() <= 1) 
-//		{
-// 		  
-//			 PorductUpdateInfo model1 = new  PorductUpdateInfo();
-//			 model1.setDeploymentId(internalDataService.getDeploymentId());
-//			 model1.setTenantId(internalDataService.getTenantId());
-//			 model1.setProductName("UBUNTU");
-//			 model1.setProductVersion("20.04");
-//			 model1.setProduct_scheduled_update(false);
-//			 model1.setProduct_scheduled_update_dateTime(null);
-//			 model1.setTask(null);
-//			 porductUpdateInfoRepository.save(model1);
-//			 			 
-//			 PorductUpdateInfo model3 = new  PorductUpdateInfo();
-//			 model3.setDeploymentId(internalDataService.getDeploymentId());
-//			 model3.setTenantId(internalDataService.getTenantId());
-//			 model3.setProductName("niralos-5g-core");
-//			 model3.setProductVersion("v-2.2.1_log-fix");
-//			 model3.setProduct_scheduled_update(false);
-//			 model3.setProduct_scheduled_update_dateTime(null);
-//			 model3.setTask(null);
-//			 porductUpdateInfoRepository.save(model3);
-//			 
-//		}	
 		
 		if (porductUpdateInfoRepository.countProductsUpdateInfo() <= 1) {
  		    List<PorductUpdateInfo> newProducts = Arrays.asList(

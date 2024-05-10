@@ -18,6 +18,12 @@ import jakarta.transaction.Transactional;
 @EnableJpaRepositories
 public interface PorductUpdateInfoRepository extends JpaRepository<PorductUpdateInfo , Long>{
 
+
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query("UPDATE PorductUpdateInfo l SET l.productVersion=?1 WHERE l.deploymentId=?2 AND l.productName='niralos-5g-core'")
+	public void updatetheVersioninDatabase(String productVersion,String deploymentId);
+
 	@Query("SELECT COUNT(l) FROM PorductUpdateInfo l")
 	public int countProductsUpdateInfo();
 	
@@ -57,6 +63,17 @@ List<Object[]> findProductNamesAndVersions(String productName1, String productNa
 	@Transactional
 	@Query("UPDATE PorductUpdateInfo i SET i.updateAvailable=?1 WHERE i.productName=?2")
 	public void updateTheAvailableUpdateInTable(boolean updateAvailable,String productName);
+
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query("UPDATE PorductUpdateInfo i SET i.productVersion=?1 WHERE i.productName=?2")
+	public void updateTheInitialVersionOfSdnToDb(String productVersion,String productName);
+
+
+	@Modifying(clearAutomatically = true)
+	@Transactional
+	@Query("UPDATE PorductUpdateInfo i SET i.productVersion=?1 WHERE i.productName=?2")
+	public void updateTheRunningVersionOfCoreSdnToDb(String productVersion,String productName);
 }
 
 

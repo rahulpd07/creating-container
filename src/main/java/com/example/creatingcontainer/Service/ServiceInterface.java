@@ -13,7 +13,7 @@ public interface ServiceInterface {
 	public Map<String,String> saveData();
 //	public void pullMongo();
 	public void pullMysql();
- 
+    public void updateInitialVersionInDb(String version);
 	public void pullNiralosSdnController();
     
 //	public void sdnControllerFrontend();

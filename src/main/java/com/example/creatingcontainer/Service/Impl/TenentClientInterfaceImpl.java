@@ -32,8 +32,8 @@ public class TenentClientInterfaceImpl implements TenentClientInterface {
 	PorductUpdateInfoRepository porductUpdateInfoRepository;
 	@Autowired
 	InternalDataService internalDataService;
-	@Autowired
-	AsyncConfiguration asyncConfiguration;
+//	@Autowired
+//	AsyncConfiguration asyncConfiguration;
 
 	@Autowired	
 	ServiceImpl serviceImpl;
@@ -61,19 +61,19 @@ public class TenentClientInterfaceImpl implements TenentClientInterface {
     }
 
 
-	@Async("asyncTaskExecutor")
-	@Scheduled(initialDelay = 5000,fixedRate = 10000)
-	@Override
-	public  void  testing() {
-		System.out.println("******************************************************************************************");
-
-	}
-	@Async("asyncTaskExecutor")
+//	@Async("asyncTaskExecutor")
+//	@Scheduled(initialDelay = 5000,fixedRate = 10000)
+//	@Override
+//	public  void  testing() {
+//		System.out.println("******************************************************************************************");
+//
+//	}
+//	@Async("asyncTaskExecutor")
 	@Scheduled(initialDelay = 5000,fixedRate = 10000)
  	@Override
-    public  void  getClientDatas() {
+    public  ProductRootDto  getClientDatas() {
 //		System.out.println("222222 APIIIIIIIIIIIIII --------------------------------------------------------------------------------");
-
+		ProductRootDto productRootDto=null;
 		String globalControllerIp = internalDataService.getGlobalControllerIp();
 		String globalControllerPort = internalDataService.getGlobalControllerPort();
  		porductUpdateInfoRepository.updateProductInfoTenentUpdate(internalDataService.getTenantId(),internalDataService.getDeploymentId());
@@ -90,14 +90,14 @@ public class TenentClientInterfaceImpl implements TenentClientInterface {
 		{
 			 try {
 	    WebClient webClient = WebClient.builder().baseUrl("http://"+globalControllerIp+":"+globalControllerPort).build();
-	    ProductRootDto productRootDto = webClient.get()
+	     productRootDto = webClient.get()
 	            .uri(uriBuilder -> uriBuilder
 	                    .path("/v1/saveDataToSiteDetailsAndCurrentProductVersion/"+"deployment_id="+model.getDeploymentId()+"/"+"tenant_name="+model.getTenantId())
 	            .build())
 	            .retrieve()
 	            .bodyToMono(ProductRootDto.class)
 	            .block();
-	    System.out.println("222222 APIIIIIIIIIIIIII 222333344444445567778909876543456789876544567876545678765");
+
 if (productRootDto != null) {
 // boolean updatesProvisionStatus = productRootDto.isProvisionStatus();
 	String task = "InQueue";
@@ -137,7 +137,8 @@ if (productRootDto != null) {
 }
  	}
 
- 	}
+        return productRootDto;
+    }
  	}
 
 

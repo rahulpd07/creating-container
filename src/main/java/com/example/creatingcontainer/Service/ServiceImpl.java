@@ -41,7 +41,8 @@ public class ServiceImpl extends Thread implements ServiceInterface {
 		InternalDataRepository internalDataRepository;
   @Autowired
 	PorductUpdateInfoRepository  porductUpdateInfoRepository;
-
+//	@Autowired
+//	TenentClientInterface tenentClientInterface;
   private static final Logger logger = LoggerFactory.getLogger(ServiceImpl.class);
 
   
@@ -67,7 +68,8 @@ public class ServiceImpl extends Thread implements ServiceInterface {
 		@Value("${vm.pathName.configuration}")
 		public void setVmpathNameConfiguration(String vmPathNameConfiguration) {
 			this.vmPathNameConfiguration = vmPathNameConfiguration;
-		}  
+		}
+
 	    
 	   // for version update  
 	    
@@ -91,7 +93,11 @@ public class ServiceImpl extends Thread implements ServiceInterface {
 		 }
 
 // Do something with dockerIp and dockerPort
-	     
+@Override
+public void updateInitialVersionInDb(String version) {
+			String productName = "niralos-local-sdn";
+	porductUpdateInfoRepository.updateTheInitialVersionOfSdnToDb(version,productName);
+}
 	    
  
 	@Override
@@ -300,6 +306,7 @@ public class ServiceImpl extends Thread implements ServiceInterface {
 	          } catch (InterruptedException e) {
 	              e.printStackTrace();
 	          }
+//			  tenentClientInterface.getClientDatas();
 	          logger.info("wait is finish now it's time to rock");
 	      }
 	      
@@ -407,6 +414,7 @@ public class ServiceImpl extends Thread implements ServiceInterface {
 
     					logger.info("Image container complete");
     					String containerId = dockerContainerResponse.getId();
+//						tenentClientInterface.getClientDatas();
     					h1 = saveData();
     					String s = "running";
     					String s1 = h1.get("niralos-mysql");
@@ -416,6 +424,7 @@ public class ServiceImpl extends Thread implements ServiceInterface {
 ////    				 String startUrl = dockerApiUrl + startEndpoint;
     						this.restartContainer(startEndpoint);
     					}
+
     					else
     					{
     						logger.info("it depends on another containers");

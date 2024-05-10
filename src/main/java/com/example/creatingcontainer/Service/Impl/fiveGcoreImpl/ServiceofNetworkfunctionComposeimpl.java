@@ -69,9 +69,11 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 	
 	 
 	 public void functionversion(String versionNumber){
-		configuration.updatetheVersioninDatabase(versionNumber,internalDataService.getDeploymentId());
+//		configuration.updatetheVersioninDatabase(versionNumber,internalDataService.getDeploymentId());
+
+		 porductUpdateInfoRepository.updatetheVersioninDatabase(versionNumber,internalDataService.getDeploymentId());
 		}
-	
+
 	private final Object lock = new Object();
 	
 //	 private String versionFivegcore;
@@ -417,7 +419,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 				}
 			}
@@ -684,7 +686,7 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-
+					tenentClientInterface.getClientDatas();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -859,8 +861,8 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 //				 String startUrl = dockerApiUrl + startEndpoint;
 						this.restartContainer(startEndpoint);
 					}
-					
-				
+
+					tenentClientInterface.getClientDatas();
 
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -1206,10 +1208,11 @@ public class ServiceofNetworkfunctionComposeimpl extends Thread implements Servi
 
 	}
 	public String GlobalImage() {
-		
-	
+
+
 		String productName = "niralos-5g-core";
 		PorductUpdateInfo porductUpdateInfo = porductUpdateInfoRepository.findByProductName(productName);
+		System.out.println("value from product info here is"+porductUpdateInfo.getProductVersion());
 		String version=porductUpdateInfo.getProductVersion();	
 		String imageRepo="niralnetworks/niralos-5g-core";
 		String imageName = imageRepo+":"+version;

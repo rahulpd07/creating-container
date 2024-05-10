@@ -22,7 +22,7 @@ import com.example.creatingcontainer.Service.ServiceInterface;
 import com.example.creatingcontainer.Service.VersionAndSdnUpdaterInterface;
 import com.example.creatingcontainer.Service.Impl.fiveGcoreImpl.ServiceofNetworkfunctionComposeimpl;
 
-@Component
+//@Component
 @EnableScheduling
 @Service
 public class VersionAndSdnUpdater implements VersionAndSdnUpdaterInterface {

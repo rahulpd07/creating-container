@@ -1,5 +1,6 @@
 package com.example.creatingcontainer;
 
+import com.example.creatingcontainer.Service.CurrentRunningVersionInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +25,8 @@ public class CreatingContainerApplication implements CommandLineRunner{
 	 InternalDataRepository internalDataRepository;
 	 @Autowired
 	 InitializationService initializationService;
-	
+	 @Autowired
+	CurrentRunningVersionInterface currentRunningVersionInterface;
 	private String dockern2Ip;
 	@Value("${docker.n2ip}")
 	public void setdockern2Ip(String dockern2Ip) {
@@ -86,6 +88,6 @@ public class CreatingContainerApplication implements CommandLineRunner{
 		
 		internalDataRepository.updatedockerIpandPort(dockerEngineIp,dockerEngineport,deploymentId,globalControllerIp,globalControllerPort);	
 		dockerNetworkConfiguration.confiurationofDockerIp(dockern2Ip,dockern3Ip,gatewayIp,dockerversionFivegcore);
-
+		currentRunningVersionInterface.getRunningContainer();
 	}
 }

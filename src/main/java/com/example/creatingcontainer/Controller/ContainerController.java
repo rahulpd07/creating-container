@@ -1,25 +1,30 @@
 package com.example.creatingcontainer.Controller;
 
  
+import com.example.creatingcontainer.Dto.DataEntityDto;
+import com.example.creatingcontainer.Model.DataEntity;
+import com.example.creatingcontainer.Model.Dto;
+import com.example.creatingcontainer.Service.Impl.*;
+import com.example.creatingcontainer.Service.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.creatingcontainer.Dto.TanentClientRootDto;
 import com.example.creatingcontainer.Dto.GlobalController.ReturnTenantData;
 import com.example.creatingcontainer.Service.ServiceImpl;
-import com.example.creatingcontainer.Service.Impl.TenantDetailsSyncToGlobalControllerImpl;
-import com.example.creatingcontainer.Service.Impl.PorductUpdateInfoImpl;
-import com.example.creatingcontainer.Service.Impl.TenentClientInterfaceImpl;
-import com.example.creatingcontainer.Service.Impl.VersionAndSdnUpdater;
- 
-  
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("api/v1")
 public class ContainerController extends Thread{
-	 
+
+	@Autowired
+	CurrentRunningVersion currentRunningVersion;
 	@Autowired
 	VersionAndSdnUpdater versionAndSdnUpdater;
 	
@@ -28,14 +33,17 @@ public class ContainerController extends Thread{
 	
 	@Autowired
 	private ServiceImpl serviceImpl;
-	  
+
+	@Autowired
+	private ServiceInterface serviceInterface;
 	@Autowired
 	private TenentClientInterfaceImpl tenentClientInterfaceImpl;
 	  
 	@Autowired
 	private PorductUpdateInfoImpl porductUpdateInfoImpl;
-	  
-	
+
+	@Autowired
+	DataEntityInterfaceImpl dataEntityInterfaceImpl;
 	@GetMapping("/sendTenentAndDeploymentId")
 	public boolean showProductDetails()	{
 		return agentModelServiceImpl.saveData();
@@ -65,17 +73,42 @@ public class ContainerController extends Thread{
 	public void sdnVersionUpdater(){
 	   versionAndSdnUpdater.pullAndUpdateSdnController();
 	}
- 
-    @GetMapping("/pullTheImageAndStartTheContainer")
-    public void getContainer()
-    {
 
+	@GetMapping("/saveSiteDetailsToDb")
+	public void getAllInfoOfSite()
+	{
+		dataEntityInterfaceImpl.saveAllDatasToDb();
+	}
+	@GetMapping("/getAllRunningContainers")
+	public List<Dto> returnAllTheRunning()
+	{
+	  return currentRunningVersion.getRunningContainer();
+	}
+
+	@GetMapping("/getSiteInfo")
+    public List<DataEntity> getAllList()
+	{
+		return dataEntityInterfaceImpl.getSiteInfoFromDb();
+	}
+
+	@GetMapping("/siteAndContactInfo")
+	public DataEntityDto getDataEntityInfo()
+	{
+		return dataEntityInterfaceImpl.setDataEntityToDto();
+	}
+    @GetMapping("/pullTheImageAndStartTheContainer/version={version}")
+    public void getContainer(@PathVariable String version)
+    {
+		serviceInterface.updateInitialVersionInDb(version);
     	 
     	 Thread  t1 = new Thread(() -> {
     		 
     		 serviceImpl.pullMysql();
     		 
     	 });
+
+
+
     //
 //    	 Thread t2= new Thread(() -> {
 //    		    try {
